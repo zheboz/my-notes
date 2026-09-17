@@ -5,11 +5,13 @@ import { data } from "react-router";
 import axios from "axios";
 import toast from "react-hot-toast";
 import NoteCard from "../components/NoteCard";
+import api from "../lib/axios";
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -18,7 +20,8 @@ const HomePage = () => {
         // const data = await res.json();
         // console.log(data);
         // const res = await axios.post("http://localhost:5001/api/notes");
-        const res = await axios.get("http://localhost:5001/api/notes");
+        const res = await api.get("/notes");
+        // const res = await axios.get("http://localhost:5001/api/notes");
         setNotes(res.data);
         setIsRateLimited(false);
         console.log(res.data);

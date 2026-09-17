@@ -13,18 +13,20 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 //middleware
-app.use(express.json());
+
 //explain middleware's function
 // app.use((req, res, next) => {
 //   console.log(`Req is ${req.method} & URL is ${req.url}`);
 //   next();
 // });
-app.use(rateLimiter);
-// app.use(cors());
 app.use(cors({
   origin: "http://localhost:5173",
 }));
 
+// app.use(cors());
+
+app.use(express.json());
+app.use(rateLimiter);
 app.use("/api/notes", notesRoutes);
 // app.use("/api/product", productRoutes);
 // app.use("/api/posts", postRoutes);
