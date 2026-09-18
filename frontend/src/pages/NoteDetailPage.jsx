@@ -44,7 +44,9 @@ const NoteDetailPage = () => {
   };
   const handleSave = async () => {
     if (!note.title.trim() || !note.content.trim()) {
+      
       toast.error("need typing");
+      return;
     }
 
     setSaving(true);
