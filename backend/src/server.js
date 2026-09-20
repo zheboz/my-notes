@@ -4,7 +4,9 @@ import dotenv from "dotenv";
 import path from "path";
 
 import notesRoutes from "./routes/notesRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import rateLimiter from "./middleware/rateLimiter.js";
+import { requireAuth } from "./middleware/auth.js";
 import { connectDB } from "./config/db.js";
 
 // const express = require("express");commonjs
@@ -34,7 +36,8 @@ if (process.env.NODE_ENV !== "production") {
 
 app.use(express.json());
 app.use(rateLimiter);
-app.use("/api/notes", notesRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/notes", requireAuth, notesRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));

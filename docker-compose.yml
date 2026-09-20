@@ -1,0 +1,29 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: notes-app:local
+    env_file:
+      - ./backend/.env
+    environment:
+      NODE_ENV: production
+      PORT: 5001
+    ports:
+      - "5001:5001"
+    restart: unless-stopped
+
+  flask-api:
+    profiles: ["flask"]
+    build:
+      context: ./flask-backend
+      dockerfile: Dockerfile
+    image: notes-flask-api:local
+    env_file:
+      - ./backend/.env
+    environment:
+      NODE_ENV: production
+      PORT: 5001
+    ports:
+      - "5002:5001"
+    restart: unless-stopped
